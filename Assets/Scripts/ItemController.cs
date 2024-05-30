@@ -8,12 +8,11 @@ public class ItemController : Interactable
 {
     // public Transform transform;
 
-    public PlayerUI playerUI;
+    private PlayerUI playerUI;
 
     void Start()
     {
-        
-        // transform = gameObject.AddComponent<Transform>();
+        playerUI = GameObject.Find("Player").GetComponent<PlayerUI>();
     }
     void Update()
     {
@@ -23,7 +22,7 @@ public class ItemController : Interactable
     protected override void Interact()
     {
         Destroy(gameObject);
-        if(gameObject.name == "Arm")
+        if(gameObject.name == "Arm(Clone)")
         {
             playerUI.GetArmItem();
         }

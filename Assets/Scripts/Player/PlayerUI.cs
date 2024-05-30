@@ -39,6 +39,6 @@ public class PlayerUI : MonoBehaviour
 
     public void GetArmItem()
     {
-        // player.hasArm = true;
+        player.hasArm = true;
     }
 }

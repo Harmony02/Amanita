@@ -13,8 +13,10 @@ public class PlayerInteract : MonoBehaviour
     private PlayerUI playerUI;
     private InputManager inputManager;
     public bool hasGun;
+    public bool hasArm;
     public float gunDistance;
     public LayerMask gunMask;
+    public GameObject itemDrop;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,7 @@ public class PlayerInteract : MonoBehaviour
                     {
                         Debug.Log("Shot enemy!!!");
                         Destroy(hitInfo.transform.gameObject);
+                        Instantiate(itemDrop, hitInfo.transform.position, transform.rotation);
                     }
                 }
 
