@@ -34,4 +34,9 @@ public class Menu : MonoBehaviour
     {
         GameController.EnamySpeed = speed;
     }
+
+    public void OpenMainMenuFromDeadState()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
