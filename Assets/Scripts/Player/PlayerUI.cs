@@ -12,11 +12,14 @@ public class PlayerUI : MonoBehaviour
     public GameObject[] images;
     public GameObject gun;
     public PlayerInteract player;
+
+    public GameObject gameOverScreen;
+
     // Start is called before the first frame update
     void Start()
     {
-        itemCount=0;
-        Cursor.lockState = CursorLockMode.Locked;   
+        itemCount = 0;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -27,9 +30,9 @@ public class PlayerUI : MonoBehaviour
 
     public void GetItem()
     {
-        itemCount+=1;
-        images[itemCount-1].SetActive(true);
-        if(itemCount==3)
+        itemCount += 1;
+        images[itemCount - 1].SetActive(true);
+        if (itemCount == 3)
         {
             gun.SetActive(true);
             player.hasGun = true;
@@ -42,5 +45,12 @@ public class PlayerUI : MonoBehaviour
         player.hasArm = true;
         images[itemCount].SetActive(true);
         Debug.Log("has arm");
+    }
+
+    public void DisplayGameOver()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        gameOverScreen.SetActive(true);
     }
 }
