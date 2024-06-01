@@ -1776,7 +1776,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2515956586032674367, guid: cab47ba10d91a574792c196b56425a89, type: 3}
   m_PrefabInstance: {fileID: 8566646839232732609}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1514234289}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 612d906c9a81c8b4e9334ff80da1eeed, type: 3}
@@ -2547,6 +2547,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466987490}
   m_CullTransparentMesh: 1
+--- !u!1 &1514234289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1072379531683585885, guid: cab47ba10d91a574792c196b56425a89, type: 3}
+  m_PrefabInstance: {fileID: 8566646839232732609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1514234298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514234289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f6962aa38e46d43851a9405f30b4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trap: {fileID: 7378909447189397864, guid: 55e6a65f3b75f8f429e6543bca2c7003, type: 3}
 --- !u!1001 &1714086191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2962,9 +2980,10 @@ GameObject:
   - component: {fileID: 1928959577}
   - component: {fileID: 1928959576}
   - component: {fileID: 1928959581}
+  - component: {fileID: 1928959582}
   m_Layer: 7
   m_Name: enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2984,6 +3003,7 @@ MonoBehaviour:
   promptMessage: 
   player: {fileID: 784428658}
   attackDistance: 1
+  timeInTrap: 2
 --- !u!136 &1928959577
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3094,6 +3114,33 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &1928959582
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928959575}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &4049277531737962334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3331,7 +3378,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3637128325896722075, guid: cab47ba10d91a574792c196b56425a89, type: 3}
       insertIndex: -1
       addedObject: {fileID: 634789470}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1072379531683585885, guid: cab47ba10d91a574792c196b56425a89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1514234298}
   m_SourcePrefab: {fileID: 100100000, guid: cab47ba10d91a574792c196b56425a89, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
