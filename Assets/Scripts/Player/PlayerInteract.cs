@@ -55,6 +55,7 @@ public class PlayerInteract : MonoBehaviour
                         Debug.Log("Shot enemy!!!");
                         Destroy(hitInfo.transform.gameObject);
                         Instantiate(itemDrop, hitInfo.transform.position, transform.rotation);
+                        
                     }
                 }
 

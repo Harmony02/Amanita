@@ -25,6 +25,7 @@ public class ItemController : Interactable
         if(gameObject.name == "Arm(Clone)")
         {
             playerUI.GetArmItem();
+            
         }
         else{
             playerUI.GetItem();

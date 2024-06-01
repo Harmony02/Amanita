@@ -40,5 +40,7 @@ public class PlayerUI : MonoBehaviour
     public void GetArmItem()
     {
         player.hasArm = true;
+        images[itemCount].SetActive(true);
+        Debug.Log("has arm");
     }
 }
