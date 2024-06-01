@@ -7,11 +7,9 @@ public class EnemyController : Interactable
 {
     // Start is called before the first frame update
     public Transform player;
+    public float attackDistance = 2;
     private NavMeshAgent agent;
-
-    public GameObject mainMenu;
-    public GameObject settingsMenu;
-
+    private bool canAttack = true;
 
     void Start()
     {
@@ -23,6 +21,18 @@ public class EnemyController : Interactable
     void Update()
     {
         agent.destination = player.position;
+        if (Vector3.Distance(transform.position, player.position) < attackDistance && canAttack)
+        {
+            AttackPlayer();
+        }
+    }
+
+    public void AttackPlayer()
+    {
+        player.GetComponent<PlayerUI>().DisplayGameOver();
+        player.GetComponent<PlayerMotor>().speed = 0;
+        canAttack = false;
+        agent.speed = 0;
     }
 
     void OnDestroy()
