@@ -10,6 +10,7 @@ public class EnemyController : Interactable
     public float attackDistance = 2;
     private NavMeshAgent agent;
     private bool canAttack = true;
+    public float timeInTrap = 2;
 
     void Start()
     {
@@ -38,5 +39,16 @@ public class EnemyController : Interactable
     void OnDestroy()
     {
         Debug.Log("i am ded");
+    }
+
+    public void EnterTrap()
+    {
+        agent.speed = 0;
+        Invoke(nameof(ExitTrap), timeInTrap);
+    }
+
+    public void ExitTrap()
+    {
+        agent.speed = GameController.EnamySpeed;
     }
 }
