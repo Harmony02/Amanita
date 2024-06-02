@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Amanita.sln"
+    "dotnet.defaultSolution": "amanita.sln"
 }
