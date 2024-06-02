@@ -14,6 +14,11 @@ public class EnemyController : Interactable
     private bool canAttack = true;
     public float timeInTrap = 2;
     public float pathfindDistance = 10f;
+    [SerializeField]
+    private GameObject zombie;
+    private bool seePlayer;
+    
+    
 
     void Start()
     {
@@ -21,6 +26,7 @@ public class EnemyController : Interactable
         agent.speed = GameController.EnamySpeed;
         agent.autoBraking = false;
         agent.destination = points[destPoint].position;
+        zombie = GameObject.FindGameObjectWithTag("zombie");
     }
 
     void Update()
@@ -35,7 +41,9 @@ public class EnemyController : Interactable
         }
         else if (Physics.Raycast(transform.position, directionToPlayer, out hit, pathfindDistance) && hit.transform == player)
         {
+            zombie.GetComponent<Animator>().SetBool("seesPlayer", seePlayer);
             agent.destination = player.position;
+            seePlayer = true;
         }
         else
         {
@@ -44,8 +52,9 @@ public class EnemyController : Interactable
                 destPoint = (destPoint + 1) % points.Length;
                 Debug.Log(destPoint);
             }
-
             agent.destination = points[destPoint].position;
+            seePlayer = false;
+            zombie.GetComponent<Animator>().SetBool("seesPlayer", seePlayer);
         }
     }
 

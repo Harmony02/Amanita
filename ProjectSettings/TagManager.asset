@@ -11,6 +11,7 @@ TagManager:
   - FinalDoor
   - DoorController
   - FinalDoorController
+  - zombie
   layers:
   - Default
   - TransparentFX
