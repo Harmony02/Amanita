@@ -21,7 +21,7 @@ public class ItemController : Interactable
 
     protected override void Interact()
     {
-        Destroy(gameObject);
+
         if (gameObject.name == "Arm(Clone)")
         {
             playerUI.GetArmItem();
@@ -35,5 +35,6 @@ public class ItemController : Interactable
         {
             playerUI.GetItem();
         }
+        Destroy(gameObject);
     }
 }

@@ -6,6 +6,9 @@ public class FinalDoorController : Interactable
 {
     [SerializeField]
     private GameObject finalDoor;
+    public AudioSource audioSource;
+    public AudioClip doorOpenSound;
+    public AudioClip terminalInteractSound;
 
     void Start()
     {
@@ -13,6 +16,8 @@ public class FinalDoorController : Interactable
     }
     protected override void Interact()
     {
+        audioSource.PlayOneShot(terminalInteractSound);
+        audioSource.PlayOneShot(doorOpenSound);
         if (GameObject.Find("Player").GetComponent<PlayerInteract>().hasArm)
         {
             finalDoor.GetComponent<Animator>().SetBool("IsOpen", true);

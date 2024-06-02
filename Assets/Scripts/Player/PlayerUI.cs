@@ -19,6 +19,10 @@ public class PlayerUI : MonoBehaviour
     public Slider sprintSlider;
     public GameObject winScreen;
 
+    public AudioSource audioSource;
+    public AudioClip itemPickupSound;
+    public AudioClip finalGunPartPickupSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,18 +40,25 @@ public class PlayerUI : MonoBehaviour
 
     public void GetItem()
     {
+
         itemCount += 1;
         images[itemCount - 1].SetActive(true);
         if (itemCount == 3)
         {
             gun.SetActive(true);
             player.hasGun = true;
+            audioSource.PlayOneShot(finalGunPartPickupSound);
+        }
+        else
+        {
+            audioSource.PlayOneShot(itemPickupSound);
         }
         Debug.Log(itemCount);
     }
 
     public void GetArmItem()
     {
+        audioSource.PlayOneShot(itemPickupSound);
         player.hasArm = true;
         images[itemCount].SetActive(true);
         Debug.Log("has arm");
@@ -55,6 +66,7 @@ public class PlayerUI : MonoBehaviour
 
     public void GetTrapItem()
     {
+        audioSource.PlayOneShot(itemPickupSound);
         GameController.TrapCount += 1;
         UpdateTrapDisplay();
 
@@ -78,7 +90,7 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         gameOverScreen.SetActive(true);
-        player.GetComponent<PlayerMotor>().speed = 0;
+        StopGameProcessing();
     }
 
     public void UpdateSprintDisplay()
@@ -91,6 +103,15 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winScreen.SetActive(true);
+        StopGameProcessing();
+    }
+
+    private void StopGameProcessing()
+    {
+        Time.timeScale = 0;
+        GameObject.Find("Player").GetComponent<PlayerInteract>().isDead = true;
+        GameObject.Find("Player").GetComponent<PlayerMotor>().speed = 0;
+        GameObject.Find("Player").GetComponent<PlayerMotor>().sprintCapacity = 0;
     }
 }
 

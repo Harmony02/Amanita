@@ -13,12 +13,17 @@ public class EnemyController : Interactable
     private NavMeshAgent agent;
     private bool canAttack = true;
     public float timeInTrap = 2;
-    public float pathfindDistance = 10f;
     [SerializeField]
     private GameObject zombie;
     private bool seePlayer;
-    
-    
+
+
+    public float pathfindDistance = 20f;
+    public AudioSource walkingAudioSource;
+    public AudioSource runningAudioSource;
+    public AudioSource audioSource;
+    public AudioClip attackSound;
+    public AudioClip trapSound;
 
     void Start()
     {
@@ -34,7 +39,10 @@ public class EnemyController : Interactable
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         RaycastHit hit;
-
+        if (agent.speed == 0)
+        {
+            return;
+        }
         if (distanceToPlayer < attackDistance && canAttack)
         {
             AttackPlayer();
@@ -42,6 +50,11 @@ public class EnemyController : Interactable
         else if (Physics.Raycast(transform.position, directionToPlayer, out hit, pathfindDistance) && hit.transform == player)
         {
             zombie.GetComponent<Animator>().SetBool("seesPlayer", seePlayer);
+            if (!runningAudioSource.isPlaying)
+            {
+                walkingAudioSource.Stop();
+                runningAudioSource.Play();
+            }
             agent.destination = player.position;
             seePlayer = true;
         }
@@ -52,6 +65,13 @@ public class EnemyController : Interactable
                 destPoint = (destPoint + 1) % points.Length;
                 Debug.Log(destPoint);
             }
+
+            if (!walkingAudioSource.isPlaying)
+            {
+                runningAudioSource.Stop();
+                walkingAudioSource.Play();
+            }
+
             agent.destination = points[destPoint].position;
             seePlayer = false;
             zombie.GetComponent<Animator>().SetBool("seesPlayer", seePlayer);
@@ -60,6 +80,9 @@ public class EnemyController : Interactable
 
     public void AttackPlayer()
     {
+
+        runningAudioSource.Stop();
+        audioSource.PlayOneShot(attackSound);
         player.GetComponent<PlayerUI>().DisplayGameOver();
         player.GetComponent<PlayerMotor>().speed = 0;
         canAttack = false;
@@ -73,6 +96,9 @@ public class EnemyController : Interactable
 
     public void EnterTrap()
     {
+        runningAudioSource.Stop();
+        walkingAudioSource.Stop();
+        audioSource.PlayOneShot(trapSound);
         agent.speed = 0;
         Invoke(nameof(ExitTrap), timeInTrap);
     }

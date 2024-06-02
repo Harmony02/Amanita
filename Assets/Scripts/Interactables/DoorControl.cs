@@ -9,6 +9,9 @@ public class DoorControl : Interactable
     [SerializeField]
     private GameObject door;
     private bool doorOpen;
+    public AudioSource audioSource;
+    public AudioClip doorOpenSound;
+    public AudioClip terminalInteractSound;
 
     private GameObject[] doors;
     // Start is called before the first frame update
@@ -19,6 +22,9 @@ public class DoorControl : Interactable
     }
     protected override void Interact()
     {
+        audioSource.PlayOneShot(terminalInteractSound);
+        audioSource.PlayOneShot(doorOpenSound);
+
         foreach (GameObject door in doors)
         {
             int random = UnityEngine.Random.Range(0, 2);
