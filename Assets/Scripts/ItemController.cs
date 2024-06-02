@@ -10,8 +10,12 @@ public class ItemController : Interactable
 
     private PlayerUI playerUI;
 
+    public AudioSource audioSource;
+    public AudioClip itemPickupSound;
+
     void Start()
     {
+        audioSource = GameObject.Find("Player").GetComponent<AudioSource>();
         playerUI = GameObject.Find("Player").GetComponent<PlayerUI>();
     }
     void Update()
@@ -21,7 +25,8 @@ public class ItemController : Interactable
 
     protected override void Interact()
     {
-        Destroy(gameObject);
+        audioSource.PlayOneShot(itemPickupSound);
+
         if (gameObject.name == "Arm(Clone)")
         {
             playerUI.GetArmItem();
@@ -35,5 +40,6 @@ public class ItemController : Interactable
         {
             playerUI.GetItem();
         }
+        Destroy(gameObject);
     }
 }

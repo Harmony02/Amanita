@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptMessage: paspausk e
+  audioSource: {fileID: 0}
+  itemPickupSound: {fileID: 8300000, guid: 7b8ca7e3575302a458629648fce03ccf, type: 3}
 --- !u!1001 &3301407680938645635
 PrefabInstance:
   m_ObjectHideFlags: 0
