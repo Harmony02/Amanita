@@ -109,6 +109,7 @@ public class PlayerUI : MonoBehaviour
     private void StopGameProcessing()
     {
         Time.timeScale = 0;
+        GameObject.Find("Player").GetComponent<PlayerInteract>().isDead = true;
         GameObject.Find("Player").GetComponent<PlayerMotor>().speed = 0;
         GameObject.Find("Player").GetComponent<PlayerMotor>().sprintCapacity = 0;
     }

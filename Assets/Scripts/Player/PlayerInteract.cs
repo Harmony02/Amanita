@@ -21,6 +21,7 @@ public class PlayerInteract : MonoBehaviour
     public AudioClip shootSound1;
     public AudioClip shootSound2;
     public AudioClip enemyDeathSound;
+    public bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,10 @@ public class PlayerInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         playerUI.UpdateText(string.Empty);
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * distance);
