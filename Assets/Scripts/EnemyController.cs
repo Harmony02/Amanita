@@ -80,8 +80,17 @@ public class EnemyController : Interactable
             seePlayer = false;
             zombie.GetComponent<Animator>().SetBool("seesPlayer", seePlayer);
         }
+        UpdateCollider();
     }
 
+    public void UpdateCollider()
+    {
+        SkinnedMeshRenderer skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        BoxCollider boxCollider = GetComponent<BoxCollider>();
+
+        boxCollider.center = skinnedMeshRenderer.bounds.center - transform.position;
+        boxCollider.size = skinnedMeshRenderer.bounds.size;
+    }
     public void AttackPlayer()
     {
 
