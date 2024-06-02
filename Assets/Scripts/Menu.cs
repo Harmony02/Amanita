@@ -18,12 +18,8 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
+        Time.timeScale = 1;
         audioSource.PlayOneShot(buttonClickSound);
-        Invoke(nameof(LoadGame), 0.5f);
-    }
-
-    private void LoadGame()
-    {
         SceneManager.LoadScene("Game");
     }
 
