@@ -22,12 +22,17 @@ public class ItemController : Interactable
     protected override void Interact()
     {
         Destroy(gameObject);
-        if(gameObject.name == "Arm(Clone)")
+        if (gameObject.name == "Arm(Clone)")
         {
             playerUI.GetArmItem();
-            
+
         }
-        else{
+        else if (CompareTag("Trap"))
+        {
+            playerUI.GetTrapItem();
+        }
+        else
+        {
             playerUI.GetItem();
         }
     }

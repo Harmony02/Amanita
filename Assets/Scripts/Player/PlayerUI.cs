@@ -10,6 +10,7 @@ public class PlayerUI : MonoBehaviour
     private TextMeshProUGUI promptText;
     private int itemCount;
     public GameObject[] images;
+    public GameObject trapDisplay;
     public GameObject gun;
     public PlayerInteract player;
 
@@ -45,6 +46,26 @@ public class PlayerUI : MonoBehaviour
         player.hasArm = true;
         images[itemCount].SetActive(true);
         Debug.Log("has arm");
+    }
+
+    public void GetTrapItem()
+    {
+        GameController.TrapCount += 1;
+        UpdateTrapDisplay();
+
+    }
+
+    public void UpdateTrapDisplay()
+    {
+        if (GameController.TrapCount == 0)
+        {
+            trapDisplay.SetActive(false);
+        }
+        else
+        {
+            trapDisplay.SetActive(true);
+            trapDisplay.GetComponentInChildren<TextMeshProUGUI>().text = GameController.TrapCount.ToString();
+        }
     }
 
     public void DisplayGameOver()
