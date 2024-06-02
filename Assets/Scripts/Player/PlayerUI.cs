@@ -90,7 +90,7 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         gameOverScreen.SetActive(true);
-        player.GetComponent<PlayerMotor>().speed = 0;
+        StopGameProcessing();
     }
 
     public void UpdateSprintDisplay()
@@ -103,6 +103,14 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winScreen.SetActive(true);
+        StopGameProcessing();
+    }
+
+    private void StopGameProcessing()
+    {
+        Time.timeScale = 0;
+        GameObject.Find("Player").GetComponent<PlayerMotor>().speed = 0;
+        GameObject.Find("Player").GetComponent<PlayerMotor>().sprintCapacity = 0;
     }
 }
 

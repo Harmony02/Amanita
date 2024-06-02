@@ -8,25 +8,42 @@ public class Menu : MonoBehaviour
 
     public GameObject mainMenuSreen;
     public GameObject settingsScreen;
+    private AudioSource audioSource;
+    public AudioClip buttonClickSound;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public void StartGame()
+    {
+        audioSource.PlayOneShot(buttonClickSound);
+        Invoke(nameof(LoadGame), 0.5f);
+    }
+
+    private void LoadGame()
     {
         SceneManager.LoadScene("Game");
     }
 
     public void OpenSettings()
     {
+        audioSource.PlayOneShot(buttonClickSound);
         mainMenuSreen.SetActive(false);
         settingsScreen.SetActive(true);
     }
 
     public void OpenMainMenu()
     {
+        audioSource.PlayOneShot(buttonClickSound);
         mainMenuSreen.SetActive(true);
         settingsScreen.SetActive(false);
     }
 
     public void QuitGame()
     {
+        audioSource.PlayOneShot(buttonClickSound);
         Application.Quit();
     }
 
@@ -37,6 +54,7 @@ public class Menu : MonoBehaviour
 
     public void OpenMainMenuFromDeadState()
     {
+        audioSource.PlayOneShot(buttonClickSound);
         SceneManager.LoadScene("Menu");
     }
 }

@@ -17,7 +17,6 @@ public class EnemyController : Interactable
     public AudioSource walkingAudioSource;
     public AudioSource runningAudioSource;
     public AudioSource audioSource;
-    public AudioClip deathSound;
     public AudioClip attackSound;
     public AudioClip trapSound;
 
@@ -82,7 +81,6 @@ public class EnemyController : Interactable
 
     void OnDestroy()
     {
-        audioSource.PlayOneShot(deathSound);
         Debug.Log("i am ded");
     }
 

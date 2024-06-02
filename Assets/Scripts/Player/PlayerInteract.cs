@@ -20,6 +20,7 @@ public class PlayerInteract : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip shootSound1;
     public AudioClip shootSound2;
+    public AudioClip enemyDeathSound;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +59,8 @@ public class PlayerInteract : MonoBehaviour
                 if (Physics.Raycast(ray, out hitInfo, gunDistance, gunMask))
                 {
                     Debug.Log("Shot enemy!!!");
+
+                    audioSource.PlayOneShot(enemyDeathSound);
                     Destroy(hitInfo.transform.gameObject);
                     Instantiate(itemDrop, hitInfo.transform.position, transform.rotation);
 
