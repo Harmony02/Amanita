@@ -17,24 +17,17 @@ public class DoorControl : Interactable
         doors = GameObject.FindGameObjectsWithTag("Door");
         Debug.Log(doors.Length);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     protected override void Interact()
     {
-        foreach(GameObject door in doors)
+        foreach (GameObject door in doors)
         {
-        int random = UnityEngine.Random.Range(0 , 2);
-        if(random==1)
-        doorOpen = true;
-        else 
-        doorOpen = false;
-        
-        door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
-        Debug.Log(doorOpen);
+            int random = UnityEngine.Random.Range(0, 2);
+            if (random == 1)
+                doorOpen = true;
+            else
+                doorOpen = false;
+
+            door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
         }
     }
 

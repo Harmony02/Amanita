@@ -17,6 +17,7 @@ public class PlayerUI : MonoBehaviour
     public GameObject gameOverScreen;
 
     public Slider sprintSlider;
+    public GameObject winScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -77,11 +78,19 @@ public class PlayerUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         gameOverScreen.SetActive(true);
+        player.GetComponent<PlayerMotor>().speed = 0;
     }
 
     public void UpdateSprintDisplay()
     {
         sprintSlider.value = gameObject.GetComponent<PlayerMotor>().sprintCapacity;
+    }
+
+    public void WinGame()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        winScreen.SetActive(true);
     }
 }
 
