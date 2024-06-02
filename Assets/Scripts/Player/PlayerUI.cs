@@ -10,16 +10,22 @@ public class PlayerUI : MonoBehaviour
     private TextMeshProUGUI promptText;
     private int itemCount;
     public GameObject[] images;
+    public GameObject trapDisplay;
     public GameObject gun;
     public PlayerInteract player;
 
     public GameObject gameOverScreen;
+
+    public Slider sprintSlider;
+    public GameObject winScreen;
 
     // Start is called before the first frame update
     void Start()
     {
         itemCount = 0;
         Cursor.lockState = CursorLockMode.Locked;
+        sprintSlider.maxValue = gameObject.GetComponent<PlayerMotor>().maxSprintCapacity;
+        UpdateSprintDisplay();
     }
 
     // Update is called once per frame
@@ -47,10 +53,45 @@ public class PlayerUI : MonoBehaviour
         Debug.Log("has arm");
     }
 
+    public void GetTrapItem()
+    {
+        GameController.TrapCount += 1;
+        UpdateTrapDisplay();
+
+    }
+
+    public void UpdateTrapDisplay()
+    {
+        if (GameController.TrapCount == 0)
+        {
+            trapDisplay.SetActive(false);
+        }
+        else
+        {
+            trapDisplay.SetActive(true);
+            trapDisplay.GetComponentInChildren<TextMeshProUGUI>().text = GameController.TrapCount.ToString();
+        }
+    }
+
     public void DisplayGameOver()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         gameOverScreen.SetActive(true);
+        player.GetComponent<PlayerMotor>().speed = 0;
+    }
+
+    public void UpdateSprintDisplay()
+    {
+        sprintSlider.value = gameObject.GetComponent<PlayerMotor>().sprintCapacity;
+    }
+
+    public void WinGame()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        winScreen.SetActive(true);
     }
 }
+
+

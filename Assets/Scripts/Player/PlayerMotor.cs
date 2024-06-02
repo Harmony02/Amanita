@@ -14,6 +14,11 @@ public class PlayerMotor : MonoBehaviour
     public float crouchTimer = 1f;
     public bool lerpCrouch = false;
     public bool sprinting = false;
+    private float lastSprintTime = 0f;
+    private float sprintRechargeRate = 1f;
+    private float sprintRechargeDelay = 2f;
+    public float maxSprintCapacity = 2f;
+    public float sprintCapacity = 2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,40 +28,41 @@ public class PlayerMotor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded= controller.isGrounded;
+        isGrounded = controller.isGrounded;
         if (lerpCrouch)
         {
             crouchTimer += Time.deltaTime;
             float p = crouchTimer / 1;
             p *= p;
-            if (crouching) 
+            if (crouching)
                 controller.height = Mathf.Lerp(controller.height, 1, p);
             else
                 controller.height = Mathf.Lerp(controller.height, 2, p);
 
             if (p > 1)
             {
-                lerpCrouch = false; 
+                lerpCrouch = false;
                 crouchTimer = 0f;
             }
-
         }
+
+        ProcessSrpint();
     }
     public void ProcessMove(Vector2 input)
     {
         Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x; 
+        moveDirection.x = input.x;
         moveDirection.z = input.y;
         controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
         playerVelocity.y += gravity * Time.deltaTime;
-        if(isGrounded && playerVelocity.y < 0)
+        if (isGrounded && playerVelocity.y < 0)
             playerVelocity.y = -2f;
         controller.Move(playerVelocity * Time.deltaTime);
         //Debug.Log(playerVelocity.y);
     }
     public void Jump()
     {
-        if(isGrounded)
+        if (isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
         }
@@ -65,12 +71,17 @@ public class PlayerMotor : MonoBehaviour
     {
         crouching = !crouching;
         crouchTimer = 0;
-        lerpCrouch= true;
+        lerpCrouch = true;
     }
 
     public void Sprint()
     {
-        sprinting= !sprinting;
+        if (sprintCapacity <= 0)
+        {
+            return;
+        }
+
+        sprinting = !sprinting;
         if (sprinting)
         {
             speed = 8;
@@ -79,5 +90,26 @@ public class PlayerMotor : MonoBehaviour
         {
             speed = 5;
         }
+    }
+
+    public void ProcessSrpint()
+    {
+
+        if (sprinting && sprintCapacity > 0)
+        {
+            sprintCapacity -= Time.deltaTime;
+            lastSprintTime = Time.time;
+            if (sprintCapacity <= 0)
+            {
+                sprinting = false;
+                speed = 5;
+            }
+        }
+        else if (!sprinting && sprintCapacity < maxSprintCapacity && Time.time > lastSprintTime + sprintRechargeDelay)
+        {
+            sprintCapacity += sprintRechargeRate * Time.deltaTime;
+        }
+
+        gameObject.GetComponent<PlayerUI>().UpdateSprintDisplay();
     }
 }

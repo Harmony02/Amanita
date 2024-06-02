@@ -15,8 +15,15 @@ public class PlayerPlaceTrap : MonoBehaviour
     {
         if (inputManager.onFoot.Trap.triggered)
         {
-            Debug.Log("Trap");
-            Instantiate(trap, transform.position, Quaternion.identity);
+            if (GameController.TrapCount == 0)
+            {
+                return;
+            }
+
+            GameController.TrapCount -= 1;
+
+            Instantiate(trap, transform.position + transform.forward, Quaternion.identity);
+            gameObject.GetComponent<PlayerUI>().UpdateTrapDisplay();
         }
     }
 }
