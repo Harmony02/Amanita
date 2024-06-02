@@ -8,23 +8,44 @@ public class EnemyController : Interactable
     // Start is called before the first frame update
     public Transform player;
     public float attackDistance = 2;
+    public Transform[] points;
+    private int destPoint = 0;
     private NavMeshAgent agent;
     private bool canAttack = true;
     public float timeInTrap = 2;
+    public float pathfindDistance = 10f;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = GameController.EnamySpeed;
-        Debug.Log("Enemy speed: " + agent.speed);
+        agent.autoBraking = false;
+        agent.destination = points[destPoint].position;
     }
 
     void Update()
     {
-        agent.destination = player.position;
-        if (Vector3.Distance(transform.position, player.position) < attackDistance && canAttack)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        RaycastHit hit;
+
+        if (distanceToPlayer < attackDistance && canAttack)
         {
             AttackPlayer();
+        }
+        else if (Physics.Raycast(transform.position, directionToPlayer, out hit, pathfindDistance) && hit.transform == player)
+        {
+            agent.destination = player.position;
+        }
+        else
+        {
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            {
+                destPoint = (destPoint + 1) % points.Length;
+                Debug.Log(destPoint);
+            }
+
+            agent.destination = points[destPoint].position;
         }
     }
 
