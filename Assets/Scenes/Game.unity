@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392942191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4902,6 +4902,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: zombie
       objectReference: {fileID: 0}
+    - target: {fileID: 4900616090742096958, guid: 1e69ff30aded711409f33bb0479a799a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5465940246521907071, guid: 1e69ff30aded711409f33bb0479a799a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -5140,7 +5144,7 @@ MonoBehaviour:
   - {fileID: 79348070}
   - {fileID: 1454931797}
   - {fileID: 1193997163}
-  timeInTrap: 2
+  timeInTrap: 5
   zombie: {fileID: 0}
   pathfindDistance: 10
   walkingAudioSource: {fileID: 178902530}

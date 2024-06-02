@@ -12,10 +12,13 @@ public class EnemyController : Interactable
     private int destPoint = 0;
     private NavMeshAgent agent;
     private bool canAttack = true;
-    public float timeInTrap = 2;
+    public float timeInTrap = 8;
     [SerializeField]
     private GameObject zombie;
     private bool seePlayer;
+    private bool isStunned;
+    private bool Attack = false;
+    private bool dead = false;
 
 
     public float pathfindDistance = 20f;
@@ -45,6 +48,7 @@ public class EnemyController : Interactable
         }
         if (distanceToPlayer < attackDistance && canAttack)
         {
+            zombie.GetComponent<Animator>().SetBool("attack", Attack);
             AttackPlayer();
         }
         else if (Physics.Raycast(transform.position, directionToPlayer, out hit, pathfindDistance) && hit.transform == player)
@@ -89,22 +93,30 @@ public class EnemyController : Interactable
         agent.speed = 0;
     }
 
-    void OnDestroy()
+    public void Die()
     {
-        Debug.Log("i am ded");
+        runningAudioSource.Stop();
+        walkingAudioSource.Stop();
+        dead = true;
+        zombie.GetComponent<Animator>().SetBool("isDead", dead);
+        agent.speed = 0;
     }
 
     public void EnterTrap()
     {
+        isStunned = true;
+        zombie.GetComponent<Animator>().SetBool("stunned", isStunned);
         runningAudioSource.Stop();
         walkingAudioSource.Stop();
         audioSource.PlayOneShot(trapSound);
-        agent.speed = 0;
         Invoke(nameof(ExitTrap), timeInTrap);
+        agent.speed = 0;
     }
 
     public void ExitTrap()
     {
+        isStunned = false;
+        zombie.GetComponent<Animator>().SetBool("stunned", isStunned);
         agent.speed = GameController.EnamySpeed;
     }
 }

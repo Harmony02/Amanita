@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -66,7 +67,8 @@ public class PlayerInteract : MonoBehaviour
                     Debug.Log("Shot enemy!!!");
 
                     audioSource.PlayOneShot(enemyDeathSound);
-                    Destroy(hitInfo.transform.gameObject);
+                    GameObject enemy = hitInfo.transform.gameObject; 
+                    enemy.GetComponent<EnemyController>().Die();
                     Instantiate(itemDrop, hitInfo.transform.position, transform.rotation);
 
                 }
