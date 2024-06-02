@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
+    public AudioSource walkAudioSource;
+    public AudioSource runAudioSource;
 
     public PlayerInput PlayrInput { get => playerInput; set => playerInput = value; }
 
@@ -29,6 +31,30 @@ public class InputManager : MonoBehaviour
     void FixedUpdate()
     {
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        if (onFoot.Movement.ReadValue<Vector2>() != Vector2.zero)
+        {
+            if (motor.sprinting)
+            {
+                if (!runAudioSource.isPlaying)
+                {
+                    walkAudioSource.Stop();
+                    runAudioSource.Play();
+                }
+            }
+            else
+            {
+                if (!walkAudioSource.isPlaying)
+                {
+                    runAudioSource.Stop();
+                    walkAudioSource.Play();
+                }
+            }
+        }
+        else
+        {
+            walkAudioSource.Stop();
+            runAudioSource.Stop();
+        }
     }
     private void LateUpdate()
     {
