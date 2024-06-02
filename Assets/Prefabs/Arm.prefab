@@ -119,9 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 846b8ea2371a1f64eb409d2cd9dcf287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptMessage: paspausk e
-  audioSource: {fileID: 0}
-  itemPickupSound: {fileID: 8300000, guid: 7b8ca7e3575302a458629648fce03ccf, type: 3}
+  promptMessage: '[E]'
 --- !u!1001 &3301407680938645635
 PrefabInstance:
   m_ObjectHideFlags: 0

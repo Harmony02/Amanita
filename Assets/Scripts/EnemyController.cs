@@ -17,8 +17,9 @@ public class EnemyController : Interactable
     private GameObject zombie;
     private bool seePlayer;
     private bool isStunned;
-    private bool Attack = false;
+    private bool Attack = true;
     private bool dead = false;
+    private float sprint; 
 
 
     public float pathfindDistance = 20f;
@@ -32,6 +33,7 @@ public class EnemyController : Interactable
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = GameController.EnamySpeed;
+        sprint = agent.speed*  1.25f;
         agent.autoBraking = false;
         agent.destination = points[destPoint].position;
         zombie = GameObject.FindGameObjectWithTag("zombie");
@@ -48,7 +50,6 @@ public class EnemyController : Interactable
         }
         if (distanceToPlayer < attackDistance && canAttack)
         {
-            zombie.GetComponent<Animator>().SetBool("attack", Attack);
             AttackPlayer();
         }
         else if (Physics.Raycast(transform.position, directionToPlayer, out hit, pathfindDistance) && hit.transform == player)
@@ -59,6 +60,7 @@ public class EnemyController : Interactable
                 walkingAudioSource.Stop();
                 runningAudioSource.Play();
             }
+            agent.speed = sprint;
             agent.destination = player.position;
             seePlayer = true;
         }
@@ -75,7 +77,7 @@ public class EnemyController : Interactable
                 runningAudioSource.Stop();
                 walkingAudioSource.Play();
             }
-
+            agent.speed = GameController.EnamySpeed;
             agent.destination = points[destPoint].position;
             seePlayer = false;
             zombie.GetComponent<Animator>().SetBool("seesPlayer", seePlayer);
@@ -109,6 +111,7 @@ public class EnemyController : Interactable
         dead = true;
         zombie.GetComponent<Animator>().SetBool("isDead", dead);
         agent.speed = 0;
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 
     public void EnterTrap()
@@ -126,6 +129,7 @@ public class EnemyController : Interactable
     {
         isStunned = false;
         zombie.GetComponent<Animator>().SetBool("stunned", isStunned);
-        agent.speed = GameController.EnamySpeed;
+        if(!dead) agent.speed = GameController.EnamySpeed;
+         
     }
 }
