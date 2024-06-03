@@ -98,6 +98,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""81175cf8-c098-44ed-ac45-701468748fdb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -230,6 +239,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Trap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1666692f-637b-4b90-b750-467837fe34d4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -764,6 +784,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_interact = m_OnFoot.FindAction("interact", throwIfNotFound: true);
         m_OnFoot_Shoot = m_OnFoot.FindAction("Shoot", throwIfNotFound: true);
         m_OnFoot_Trap = m_OnFoot.FindAction("Trap", throwIfNotFound: true);
+        m_OnFoot_Esc = m_OnFoot.FindAction("Esc", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -845,6 +866,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_interact;
     private readonly InputAction m_OnFoot_Shoot;
     private readonly InputAction m_OnFoot_Trap;
+    private readonly InputAction m_OnFoot_Esc;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -857,6 +879,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @interact => m_Wrapper.m_OnFoot_interact;
         public InputAction @Shoot => m_Wrapper.m_OnFoot_Shoot;
         public InputAction @Trap => m_Wrapper.m_OnFoot_Trap;
+        public InputAction @Esc => m_Wrapper.m_OnFoot_Esc;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -890,6 +913,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Trap.started += instance.OnTrap;
             @Trap.performed += instance.OnTrap;
             @Trap.canceled += instance.OnTrap;
+            @Esc.started += instance.OnEsc;
+            @Esc.performed += instance.OnEsc;
+            @Esc.canceled += instance.OnEsc;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -918,6 +944,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Trap.started -= instance.OnTrap;
             @Trap.performed -= instance.OnTrap;
             @Trap.canceled -= instance.OnTrap;
+            @Esc.started -= instance.OnEsc;
+            @Esc.performed -= instance.OnEsc;
+            @Esc.canceled -= instance.OnEsc;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1063,6 +1092,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnTrap(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerUI : MonoBehaviour
     public PlayerInteract player;
 
     public GameObject gameOverScreen;
+    public GameObject escMenu;
 
     public Slider sprintSlider;
     public GameObject winScreen;
@@ -22,11 +24,14 @@ public class PlayerUI : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip itemPickupSound;
     public AudioClip finalGunPartPickupSound;
+    public AudioClip buttonClickSound;
+    public bool isPaused;
 
     // Start is called before the first frame update
     void Start()
     {
         itemCount = 0;
+        audioSource = GetComponent<AudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
         sprintSlider.maxValue = gameObject.GetComponent<PlayerMotor>().maxSprintCapacity;
         UpdateSprintDisplay();
@@ -112,6 +117,47 @@ public class PlayerUI : MonoBehaviour
         GameObject.Find("Player").GetComponent<PlayerInteract>().isDead = true;
         GameObject.Find("Player").GetComponent<PlayerMotor>().speed = 0;
         GameObject.Find("Player").GetComponent<PlayerMotor>().sprintCapacity = 0;
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(isPaused)
+            {
+                EscMenuClose();
+            }
+            else
+            {
+                EscMenuOpen();
+            }
+        }
+    } 
+    private void EscMenuOpen()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        escMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+    private void EscMenuClose()
+    {
+        escMenu.SetActive(false);
+        Time.timeScale = 1f; 
+        isPaused = false;
+    }
+
+    public void EscToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void Quit()
+    {
+        audioSource.PlayOneShot(buttonClickSound);
+        Application.Quit();
     }
 }
 

@@ -53,4 +53,5 @@ public class Menu : MonoBehaviour
         audioSource.PlayOneShot(buttonClickSound);
         SceneManager.LoadScene("Menu");
     }
+    
 }
